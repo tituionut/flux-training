@@ -1,0 +1,9 @@
+resources:
+  - ../../base
+
+namespace: testhest
+
+configMapGenerator:
+  - name: html
+    files:
+      - index.html

@@ -1,0 +1,15 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: myapp
+  namespace: default
+spec:
+  interval: 10m
+  timeout: 5m
+  chartRef:
+    kind: HelmChart
+    name: myapp
+    namespace: default
+  releaseName: myapp-release
+  values:
+    replicaCount: 3

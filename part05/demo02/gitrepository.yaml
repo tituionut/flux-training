@@ -1,0 +1,10 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: demo02
+  namespace: default
+spec:
+  interval: 1m0s
+  ref:
+    branch: <GIT_BRANCH_NAME>
+  url: <HTTP_GIT_URL>

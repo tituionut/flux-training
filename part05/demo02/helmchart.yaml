@@ -1,0 +1,11 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmChart
+metadata:
+  name: myapp
+  namespace: default
+spec:
+  interval: 10m
+  chart: ./mychart
+  sourceRef:
+    kind: GitRepository
+    name: demo02
