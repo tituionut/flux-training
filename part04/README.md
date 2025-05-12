@@ -28,6 +28,7 @@ Basic Kustomize usage
 
 ## exercise 1
 Basic use of Kustomize overlays.
+Use the application from `example02` for this exercise.
 
 Let's try the following `workshop-flux-myteam` structure.
 

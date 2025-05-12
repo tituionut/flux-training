@@ -4,11 +4,12 @@
 In this exercise we will try to create helm releases using Flux `HelmRepository` and `HelmRelease` CRDs.
 We will not use Flux Git source reconciliation yet.
 
-1. Define a `HelmRepository` for `bitnami`
+1. (See `demo01` for the inspiration)
+2. Define a `HelmRepository` for `bitnami`
    * For now, you do not need to push the created `HelmRepository` to Git
    * Let's use oldschool `https` and not modern `oci://`
    * https://charts.bitnami.com/bitnami
-2. Define a `HelmRelease` for `nginx`
+3. Define a `HelmRelease` for `nginx`
    * For now, you do not need to push the created `HelmRepository` to Git
    * https://artifacthub.io/packages/helm/jfrog/nginx
    * If you have `helm` installed
@@ -21,16 +22,16 @@ We will not use Flux Git source reconciliation yet.
          service:
            type: ClusterIP
      ```
-3. Apply both files using `kubectl apply -f` command
-4. Get `helmrepositories` and `helmreleases` objects
-5. If you have `helm` installed
+4. Apply both files using `kubectl apply -f` command
+5. Get `helmrepositories`, `helmcharts` and `helmreleases` objects
+6. If you have `helm` installed
    * Look at the status of the Helm release
-6. Make sure the application is created
-7. Change version of chart to `15.2.1` and apply again
-8. Get `helmrepositories` and `helmreleases` objects
-9. If you have `helm` installed
-   * Look at the status of the Helm release
-10. Continue to exercise 2
+7. Make sure the application is created
+8. Change version of chart to `15.2.1` and apply again
+9. Get `helmrepositories`, `helmcharts` and `helmreleases` objects
+10. If you have `helm` installed
+    * Look at the status of the Helm release
+11. Continue to exercise 2
 
 
 ## exercise 2
@@ -61,16 +62,15 @@ Delete manually created `HelmRepository` and `HelmRelease` objects
    * `HelmRepository` and `HelmRelease` for `nginx` (as in the first exercise)
      * Remember, that namespaces have to be defined
 4. Define `GitRepository` and `Kustomization` in `workshop-flux-bootstrap` that would point to `workshop-flux-myteam`
-5. Inspect `gitrepositories`, `kustomizations`, `helmrepositories`, `helmreleases` objects
+5. Inspect `gitrepositories`, `kustomizations`, `helmrepositories`, `helmcharts`, `helmreleases` objects
 6. If you have `helm` installed
    * Look at the status of the Helm release
 7. Make sure the application is created
 
 
 ## exercise 2
-Even though `HelmRelease` can reference `HelmRepository` from another namespace, let's pretend we do not want to share any resources between namespaces.
 Let's use Kustomize to create `HelmRepository` for bitnami for `dev` and `prod` namespaces.
-And then we `HelmRelease` for `nginx` in `dev` and `HelmRelease` for `nginx` and `apache` in `prod`.
+And then we create `HelmRelease` for `nginx` in `dev` and `HelmRelease` for `nginx` and `apache` in `prod`.
 One could end up in having something similar to the following structure:
 
 ```
@@ -114,7 +114,7 @@ Let's see drift detection in Helm charts.
 
 1. Remove everything from `workshop-flux-bootstrap` except `gotk-*` files
 2. Remove everything from `workshop-flux-myteam`
-3. Create a `HelmRepository` and `HelmRelease` from `demo02` in `workshop-flux-myteam` root
+3. Create a `HelmRepository` and `HelmRelease` from `demo01` in `workshop-flux-myteam` root
 4. Create application using `app.yaml` from earlier exercises in `workshop-flux-myteam` root
 5. Define `GitRepository` and `Kustomization` in `workshop-flux-bootstrap` that would point to `workshop-flux-myteam`
 6. Make sure the applications are created
@@ -127,7 +127,7 @@ Let's see drift detection in Helm charts.
 10. Now add `.spec.driftDetection.mode` to `HelmRelease`
 11. Wait for Git reconciliation
     * Not `Kustomization` reconciliation, but `GitRepository` reconciliation
-12. State of the `Deployment` will be updated, but this is not because of `.spec.driftDetection.mode`, but because of we have changed the object
+12. State of the `Deployment` will be updated, but this is not because of `.spec.driftDetection.mode`, but because we have updated `GitRepository`
 13. Change the amount of replicas on `podinfo` `Deployment`
 14. Wait for reconciliation of a HelmRelease (see `spec.interval`)
     * Or force it
