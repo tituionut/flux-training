@@ -7,6 +7,9 @@ You need:
 * Optionally `flux` cli tool
   * See installation process [here](https://fluxcd.io/flux/cmd/)
   * If you have troubles running it, it is not a big deal
+* Optionally `helm` cli tool
+  * See installation process [here](https://github.com/helm/helm/releases)
+  * If you have troubles running it, it is not a big deal
 
 To configure access to the cluster:
 1. Download you cluster `cluster-<CLUSTER>-kubeconfig.yaml` file
@@ -57,14 +60,14 @@ There are already pre-generated Flux installation yaml files in `install` direct
    1. (This is though not strictly necessary. But in this way Flux CRDs, Flux controllers, bootstrap Git repository and bootstrap Kustomization are also managed by Flux. So in this way Flux can manage itself.)
    2. `install/gotk-components.yaml`
       * This file contains all the components required to run Flux
-      * Push the `gotk-components.yaml` file to the root of your Git repository
+      * Push the `gotk-components.yaml` file to the root of your `workshop-flux-bootstrap` Git repository
         * This is not strictly necessary
         * However, this gives us an opportunity to manage Flux through itself
    3. `install/gotk-repository.yaml`
       * This file describes a git repository that Flux should watch
       * Adjust `<HTTP_GIT_URL>` and `<GIT_BRANCH_NAME>` in the `gotk-repository.yaml` file
         * fx `https://gitlab.com/<username>/<project_name>` and `master`
-      * Push the `gotk-repository.yaml` file to the root of your Git repository
+      * Push the `gotk-repository.yaml` file to the root of your `workshop-flux-bootstrap` Git repository
    4. `install/gotk-kustomization.yaml`
       * This file describes a _Kustomization_ that Flux should watch
         * This is not Kustomize, but a Flux Kustomization
@@ -84,7 +87,7 @@ There are already pre-generated Flux installation yaml files in `install` direct
       * Do not apply it, push it at the root of your Git repository -- Flux will do the job
    2. Now you can either wait one minute for Flux to fetch it from Git based on the interval in `GitRepository` `spec.interval` or you can manually force it.
       * `kubectl annotate --overwrite gitrepo/flux-system -n flux-system reconcile.fluxcd.io/requestedAt="$(date +%s)"`
-   3. Make sure you do not have any errors in `kustomizations` and `gitrepositories` objects in `default` namespace
+   3. Make sure you do not have any errors in `kustomizations` and `gitrepositories` objects in `flux-system` namespace
    4. Describe `kustomizations` and `gitrepositories`
    5. Verify the application is created in the cluster
 
@@ -131,11 +134,13 @@ In this case you can say that the Flux is managed by Helm now.
       * Do not apply it, push it at the root of your Git repository -- Flux will do the job
    2. Now you can either wait one minute for Flux to fetch it from Git based on the interval in `GitRepository` `spec.interval` or you can manually force it.
       * `kubectl annotate --overwrite gitrepo/flux-system -n flux-system reconcile.fluxcd.io/requestedAt="$(date +%s)"`
-   3. Make sure you do not have any errors in `kustomizations` and `gitrepositories` objects in `default` namespace
+   3. Make sure you do not have any errors in `kustomizations` and `gitrepositories` objects in `flux-system` namespace
    4. Describe `kustomizations` and `gitrepositories`
    5. Verify the application is created in the cluster
 
 If you wish to uninstall Flux
+* Delete manifests from your `workshop-flux-boostrap` Git repository
+  * `kubectl delete -f workshop-flux-boostrap`
 * `helm uninstall -n flux-system flux-system`
   * Or other name and namespace that you have used
 * Remove CRDs

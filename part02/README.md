@@ -2,7 +2,7 @@
 
 In this exercise we will continue working on the setup we have created before.
 It is assumed that you have Flux installed and synchronized with `workshop-flux-bootstrap` Git directory.
-If you have installed Flux a different way, it is perfectly fine.
+If you have installed Flux in a different way, it is perfectly fine.
 The most important is that you have a Git directory that Flux is synchronized with.
 
 
@@ -11,13 +11,14 @@ Triggering synchronization
 
 1. Look at the source controller logs
 2. Update the application in `workshop-flux-bootstrap` Git repository
-3. Annotate your "root" Git repository
+   * E.g. by changing the amount of replicas
+3. Annotate your "root" Git repository to force synchronization
    * `kubectl annotate --overwrite gitrepository/flux-system -n flux-system reconcile.fluxcd.io/requestedAt="$(date +%s)"`
 4. Look at the source controller logs
 
 
 ## exercise 2
-Flux will use Kustomize to make sure the state of the cluster is the same as the state in the Git repository.
+Flux will use `Kustomization` object (not Kustomize `Kustomization`, but Flux `Kustomization`) to make sure the state of the cluster is the same as the state in the Git repository.
 
 1. If you have not done so already, push `app.yaml` to `workshop-flux-bootstrap`
 2. Make sure the application is deployed
@@ -26,6 +27,7 @@ Flux will use Kustomize to make sure the state of the cluster is the same as the
    * Either by waiting a little bit (based on the `spec.interval`)
    * Or annotating the `flux-system` Kustomization
      * `kubectl annotate --overwrite kustomization/flux-system -n flux-system reconcile.fluxcd.io/requestedAt="$(date +%s)"`
+5. Inspect at the kustomize controller logs
 
 
 ## exercise 3
@@ -34,10 +36,14 @@ Plain manifests.
 1. If you have not done so already, push `app.yaml` to `workshop-flux-bootstrap`
 2. Make sure the application is deployed
 3. Push `app2.yaml` to `workshop-flux-bootstrap`
+   * Just copy `app.yaml` and adjust the names
 4. Make sure the second application is deployed
+   * Wait for synchronization with git or force it
 5. Change a property in the second application, e.g. amount of replicas
+   * Wait for synchronization with git or force it
 6. Verify the changes are updated
 7. Delete both applications from `workshop-flux-bootstrap`
+   * Wait for synchronization with git or force it
 8. Make sure the applications are deleted from the cluster
 
 
@@ -54,10 +60,10 @@ Plain manifests.
 5. Can you see that the git revision got updated in the kustomization?
 6. What does kustomization-controller have in the logs?
 7. Change the application (e.g. amount of replicas on the `Deployment` using `kubectl edit`)
-8. Check the application gets restored to the "state" in Git
-  * Either by waiting a little bit (based on the `spec.interval`)
-  * Or annotating the `flux-system` Kustomization
-    * `kubectl annotate --overwrite kustomization/flux-system -n flux-system reconcile.fluxcd.io/requestedAt="$(date +%s)"`
+8. Check the application gets restored to the "state" in git
+   * Either by waiting a little bit (based on the `spec.interval`)
+   * Or annotating the `flux-system` Kustomization
+     * `kubectl annotate --overwrite kustomization/flux-system -n flux-system reconcile.fluxcd.io/requestedAt="$(date +%s)"`
 
 ## exercise 3
 

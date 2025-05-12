@@ -11,7 +11,7 @@ In this exercise we will deploy application that is not managed by us.
    * `kubectl annotate --overwrite gitrepository/flux-system -n flux-system reconcile.fluxcd.io/requestedAt="$(date +%s)"`
 4. Make sure `GitRepository` is created
 5. In your `workshop-flux-bootstrap` Git repository define a new `Kustomization`
-   * That would point to the `kustomize` folder in the new `GitRepository`
+   * That would point to the `./kustomize` folder in the new `GitRepository`
    * Also add `spec.targetNamespace: default`
 6. Wait for reconciliation or force it
 7. Make sure `Kustomization` is created
@@ -35,7 +35,7 @@ In this exercise we will create a new repository which you will make use of in t
 In this exercise we will add new synchronization to our new `workshop-flux-myteam` Git repository.
 
 1. First, remove `app.yaml` from our initial `workshop-flux-bootstrap`.
-   1 So that we have only `gotk-*` files left.
+   1. So that we have only `gotk-*` files left.
    2. Make sure the application is removed from the cluster
 2. Push `app.yaml` to the `workshop-flux-myteam` instead
 3. Now in the `workshop-flux-bootstrap` define a `GitRepository` and `Kustomization` that would point to `workshop-flux-myteam`
@@ -127,8 +127,8 @@ One git repository, multiple branches.
 3. Create two branches in `workshop-flux-myteam`
    * `team1`
    * `team2`
-4. In branch `team1` create Namespace `team1` and application `app.yaml` belonging to that namespace
-5. In branch `team2` create Namespace `team2` and application `app.yaml` belonging to that namespace
+4. In branch `team1` create `Namespace` `team1` and application `app.yaml` belonging to that namespace
+5. In branch `team2` create `Namespace` `team2` and application `app.yaml` belonging to that namespace
 6. Push both branches
 7. In your `workshop-flux-bootstrap` create
    * Two `GitRepository` objects
@@ -140,7 +140,7 @@ One git repository, multiple branches.
 10. Verify the namespaces and applications are created
 11. Remove `GitRepository` and `Kustomization` for `team1`
 12. Wait for reconciliation or force it
-13. Verify that team1 applications are removed
+13. Verify that `team1` applications are removed
 
 
 # B
@@ -158,7 +158,7 @@ workshop-flux-boostrap/               # our initial Git repository
 └── myteam-kustomization.yaml
 
 workshop-flux-myteam/
-├── myteam-myapp-gitrepository.yaml   # pointing to workshop-flux-myteam
+├── myteam-myapp-gitrepository.yaml   # pointing to workshop-flux-myteam-myapp
 └── myteam-myapp-kustomization.yaml
 
 workshop-flux-myteam-myapp/
