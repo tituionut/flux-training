@@ -65,7 +65,7 @@ Plain manifests.
    * Or annotating the `flux-system` Kustomization
      * `kubectl annotate --overwrite kustomization/flux-system -n flux-system reconcile.fluxcd.io/requestedAt="$(date +%s)"`
 
-## exercise 3
+## exercise 2
 
 1. Make an error in `app.yaml`
    * E.g. make the file invalid yaml
