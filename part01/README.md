@@ -41,17 +41,8 @@ In this way you will understand how it works under the hood.
 ## exercise 2
 Install via yaml files.
 
-There are several options to obtain the yaml files to install Flux (CRds, controllers, etc):
-* One could simply point to the releases from GitHub
-  * see https://github.com/fluxcd/flux2/releases
-  * Flux automatically publishes `install.yaml` manifest
-    * `kubectl apply -f https://github.com/fluxcd/flux2/releases/latest/download/install.yaml`
-    * `kubectl apply -f https://github.com/fluxcd/flux2/releases/download/<VERSION>/install.yaml`
-    * `kubectl apply -f https://github.com/fluxcd/flux2/releases/download/v2.5.1/install.yaml`
-* Generate the yaml files from `flux` cli tool
-  * `flux install --export --namespace flux-system > gotk-components.yaml`
-  * `flux create source git flux-system --url=<GIT_HTTP_URL> --branch=<GIT_BRANCH_NAME> --export > gotk-repository.yaml`
-  * `flux create kustomization flux-system --source=GitRepository/flux-system --path="." --prune=true --interval=1m --export > gotk-kustomization.yaml`
+There are several options to obtain the yaml files to install Flux (CRDs, controllers, etc).
+See extras section below for extra details.
 
 There are already pre-generated Flux installation yaml files in `install` directory in this folder.
 "gotk" abbreviation stands for [GitOps Toolkit](https://fluxcd.io/flux/components/).
@@ -172,3 +163,20 @@ So you do not need to do it manually, as in previous steps.
   * `flux uninstall`
     * Use `--namespace` option if you have installed it to a non-default (`flux-system`) namespace
   * Delete Git repo content and push it
+
+## extras (optional)
+
+In this course we will use pre-generated yaml files to install Flux.
+
+There are several options to obtain the yaml files to install Flux (CRDs, controllers, etc).
+
+* One could simply point to the releases from GitHub
+  * see https://github.com/fluxcd/flux2/releases
+  * Flux automatically publishes `install.yaml` manifest
+    * `kubectl apply -f https://github.com/fluxcd/flux2/releases/latest/download/install.yaml`
+    * `kubectl apply -f https://github.com/fluxcd/flux2/releases/download/<VERSION>/install.yaml`
+    * `kubectl apply -f https://github.com/fluxcd/flux2/releases/download/v2.6.4/install.yaml`
+* Generate the yaml files from `flux` cli tool
+  * `flux install --export --namespace flux-system > gotk-components.yaml`
+  * `flux create source git flux-system --url=<GIT_HTTP_URL> --branch=<GIT_BRANCH_NAME> --export > gotk-repository.yaml`
+  * `flux create kustomization flux-system --source=GitRepository/flux-system --path="." --prune=true --interval=1m --export > gotk-kustomization.yaml`
