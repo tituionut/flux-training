@@ -1,25 +1,5 @@
 # A
 
-## exercise 1
-In this exercise we will deploy application that is not managed by us.
-
-1. Analyze https://github.com/stefanprodan/podinfo/tree/master/kustomize
-2. In your `workshop-flux-bootstrap` Git repository define a new `GitRepository`
-   * That would point to `https://github.com/stefanprodan/podinfo`
-   * Branch `master`
-3. Wait for reconciliation or force it
-   * `kubectl annotate --overwrite gitrepository/flux-system -n flux-system reconcile.fluxcd.io/requestedAt="$(date +%s)"`
-4. Make sure `GitRepository` is created
-5. In your `workshop-flux-bootstrap` Git repository define a new `Kustomization`
-   * That would point to the `./kustomize` folder in the new `GitRepository`
-   * Also add `spec.targetNamespace: default`
-6. Wait for reconciliation or force it
-7. Make sure `Kustomization` is created
-8. Verify the application is created
-9. Use not a `master` branch, but a specific tag
-   * Check documentation at https://fluxcd.io/flux/components/source/gitrepositories/#reference
-   * Try using a tag or another branch instead in the `GitRepository`
-10. Delete the created `Kustomization` and `GitRepository`
 
 
 ## exercise 2
