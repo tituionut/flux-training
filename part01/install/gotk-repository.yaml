@@ -7,5 +7,5 @@ metadata:
 spec:
   interval: 1m0s
   ref:
-    branch: <GIT_BRANCH_NAME>
-  url: <HTTP_GIT_URL>
+    branch: master
+  url: https://github.com/tituionut/flux-training
